@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake_Logic
 {
-    public class Class1
+    public class God
     {
     }
 }
