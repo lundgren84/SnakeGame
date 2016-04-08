@@ -39,6 +39,7 @@ namespace Snake_Cons
                             Console.Clear();
                             Console.WriteLine("GameOver");
                             CheckScore();
+                            Console.ReadKey();
 
                             Environment.Exit(-1);
                         }
@@ -66,7 +67,7 @@ namespace Snake_Cons
             {
                 PrintSnake();
                 MoveSnake();
-                
+
                 SnakeEat();
                 Thread.Sleep(100);
                 Colosion();
@@ -84,7 +85,7 @@ namespace Snake_Cons
         {
             Console.SetCursorPosition(1, 1);
             Console.WriteLine("      Your Score is: " + Settings.score);
-            Console.ReadKey();
+            
         }
         public void SnakeEat()
         {
@@ -125,13 +126,14 @@ namespace Snake_Cons
                         else if (Settings.direction == Direction.Up) { Snake[i].y--; }
                         else if (Settings.direction == Direction.Left) { Snake[i].x--; }
                         else if (Settings.direction == Direction.Right) { Snake[i].x++; }
+                        else if (Settings.direction == Direction.Stop) { CheckScore(); }
                     }
                     catch
                     {
                         Console.Clear();
                         Console.WriteLine("GameOver");
                         CheckScore();
-
+                        Console.ReadKey();
                         Environment.Exit(-1);
                     }
                 }
@@ -147,7 +149,7 @@ namespace Snake_Cons
                 {
                     case ConsoleKey.Spacebar:
                         Settings.direction = Direction.Stop;
-                        CheckScore();
+
                         break;
                     case ConsoleKey.Enter:
                         break;
@@ -190,15 +192,9 @@ namespace Snake_Cons
                     Console.Clear();
                     Console.WriteLine("GameOver");
                     CheckScore();
+                    Console.ReadKey();
                     Environment.Exit(-1);
                 }
-            }
-            if(Snake[0].x == 30 || Snake[0].y == 30)
-            {
-                Console.Clear();
-                Console.WriteLine("GameOver");
-                CheckScore();
-                Environment.Exit(-1);
             }
         }
 
