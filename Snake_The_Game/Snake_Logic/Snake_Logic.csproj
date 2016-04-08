@@ -42,7 +42,9 @@
   <ItemGroup>
     <Compile Include="Circle.cs" />
     <Compile Include="God.cs" />
+    <Compile Include="LoadAndSaveGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Score.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

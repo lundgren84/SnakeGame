@@ -15,8 +15,11 @@ namespace Snake_The_Game
     {
         List<Circle> Snake;
         Circle food;
-        Circle FoodEating;
-        bool GameStart = false;
+        bool GameDone = true;
+        List<Score> HighScore;
+        string name = "";
+
+
 
         public Form1()
         {
@@ -24,7 +27,21 @@ namespace Snake_The_Game
             timerGame.Tick += TimerGame_Tick;
             timerMove.Tick += TimerMove_Tick;
             pbCanvas.Paint += PbCanvas_Paint;
+              HighScore = LoadAndSaveGame.LoadG();
+             SetScoresOnBoard();
+        }
 
+        private void SetScoresOnBoard()
+        {
+            for (int i = 0; i < HighScore.Count; i++)
+            {
+                lblName1.Text = HighScore[0]._name;
+                lblScore1.Text = HighScore[0]._score.ToString();
+                lblName2.Text = HighScore[1]._name;
+                lblScore2.Text = HighScore[1]._score.ToString();
+                lblName3.Text = HighScore[2]._name;
+                lblScore3.Text = HighScore[2]._score.ToString();
+            }
         }
 
         private void TimerMove_Tick(object sender, EventArgs e)
@@ -40,11 +57,10 @@ namespace Snake_The_Game
 
         private void StartGame()
         {
-            GameStart = true;
+            pbCanvas.Image = Properties.Resources.untitled;
             Snake = new List<Circle>();
-            lblEndText.Visible = false;
             new Settings();
-
+            GameDone = false;
             //Creat a new Player object
             Circle head = new Circle();
             head.x = 15;
@@ -71,7 +87,7 @@ namespace Snake_The_Game
         {
             Graphics canvas = e.Graphics;
 
-            if (GameStart)
+            if (!GameDone)
             {
 
                 //    Sett colour of snake
@@ -129,6 +145,7 @@ namespace Snake_The_Game
                     break;
                 default: return;  // ignore other keys
             }
+
             //if (Inputs.KeyPressed(Keys.Right) && Settings.direction != Direction.Left)
             //    Settings.direction = Direction.Right;
             //else if (Inputs.KeyPressed(Keys.Left) && Settings.direction != Direction.Right)
@@ -137,7 +154,6 @@ namespace Snake_The_Game
             //    Settings.direction = Direction.Up;
             //else if (Inputs.KeyPressed(Keys.Down) && Settings.direction != Direction.Up)
             //    Settings.direction = Direction.Down;
-
         }
         private void MovePlayer()
         {
@@ -203,11 +219,16 @@ namespace Snake_The_Game
             Snake.Add(food);
             Settings.score += Settings.points;
             lblScore.Text = Settings.score.ToString();
+            GenerateFood();
         }
 
         private void Die()
         {
-            Settings.GameOver = true;
+            GameDone = true;
+            pbCanvas.Image = Properties.Resources.Snake;
+
+            Score score = new Score(name, Settings.score);
+            HighScore = LoadAndSaveGame.CheckHighScore(HighScore, score);
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,6 +247,29 @@ namespace Snake_The_Game
             pbCanvas.Invalidate();
         }
 
+        private void changeSpeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //pbSave.Visible = true;
+            //pbSave.BringToFront();
+            //btnSave.Visible = true;
+            //btnSave.BringToFront();
+            //tbSave.Visible = true;
+            //tbSave.BringToFront();
+            //lblSave.Visible = true;
+            //lblSave.BringToFront();
+        }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //name = tbSave.Text;
+            //Score score = new Score(name, Settings.score);
+            //HighScore = LoadAndSaveGame.CheckHighScore(HighScore,score);       
+            //pbSave.Visible = false;
+            //btnSave.Visible = false;      
+            //tbSave.Visible = false;        
+            //lblSave.Visible = false;
+            
+
+        }
     }
 }
